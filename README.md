@@ -50,6 +50,13 @@ Access the application at http://localhost:3000.
 
 
 
+Contact
+
+For any queries or support, feel free to contact:
+Email: kundankumar8989@gmail.com
+
+
+
 
 
 
