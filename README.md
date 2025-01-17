@@ -18,6 +18,9 @@ Disease Prediction: The system analyzes the image and identifies the disease aff
 
 Treatment Suggestion: Based on the disease, the GPT model recommends suitable medicines or treatments.
 
+see a small demo of our output
+![Image](https://github.com/user-attachments/assets/5982be95-c7b5-4761-a855-dec6fc921f24)
+
 ##Technologies Used
 
 Frontend: React.js for creating an interactive user interface.
