@@ -23,11 +23,9 @@ see a small demo of our output
 
 ##Technologies Used
 
-Frontend: React.js for creating an interactive user interface.
+Frontend: Streamlit for creating an interactive user interface.
 
-Backend: Flask/Django (or your chosen framework) for handling API requests and responses.
-
-Machine Learning: TensorFlow/PyTorch for disease prediction models.
+Machine Learning: TensorFlow for disease prediction models.
 
 NLP: OpenAI's GPT model for generating treatment recommendations.
 
