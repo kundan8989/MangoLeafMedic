@@ -10,7 +10,7 @@ Features
 
 -User-Friendly Interface: Provides an intuitive interface for uploading leaf images and receiving instant results.
 
-**How It Works**
+{{**How It Works**}}
 
 Image Upload: The user uploads an image of the mango leaf.
 
