@@ -4,11 +4,11 @@ MangoLeafMedic is an AI-powered tool designed to assist in diagnosing diseases i
 
 # Features
 
-  -Disease Detection: Predicts the type of disease affecting the mango leaf using advanced machine learning algorithms.
+    -Disease Detection: Predicts the type of disease affecting the mango leaf using advanced machine learning algorithms.
 
-  -Medicine Recommendation: Suggests effective treatments for the diagnosed disease using GPT-based natural language processing.
+    -Medicine Recommendation: Suggests effective treatments for the diagnosed disease using GPT-based natural language processing.
 
-  -User-Friendly Interface: Provides an intuitive interface for uploading leaf images and receiving instant results.
+    -User-Friendly Interface: Provides an intuitive interface for uploading leaf images and receiving instant results.
 
 # How It Works
 
