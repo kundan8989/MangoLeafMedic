@@ -1,84 +1,61 @@
 from langchain_community.llms import OpenAI
-from langchain_core.messages import SystemMessage,HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage
 import os
 from dotenv import load_dotenv
 import streamlit as st
 import cv2
 import numpy as np
 from keras.models import load_model
-import tensorflow
+import tensorflow as tf
 
-# load the model from the  file
+# Load the model
 model = load_model('mld_new.keras')
 
-diseases=["Anthracnose","Bacterial Canker","Cutting Weevil","Die back",",Gall Midge","Healthy","Powdery Mildew","sooty mould"]
+# Class labels
+diseases = ["Anthracnose", "Bacterial Canker", "Cutting Weevil", "Die back",
+            "Gall Midge", "Healthy", "Powdery Mildew", "Sooty Mould"]
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-#loading the model by default openai uses gpt 3.5 turbo
+# Initialize GPT model
 llm = OpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"), temperature=0.7)
 
+# Streamlit app
+st.title("🍃 MangoLeafMedic")
 
+uploaded_file = st.file_uploader("Upload a mango leaf image", type=["jpg", "png", "jpeg", "gif"])
 
-
-# Title of the app
-st.title("MangoLeafMedic")
-
-# File uploader widget
-uploaded_file = st.file_uploader("Choose an image", type=["jpg", "png", "jpeg", "gif"])
-
-
-bt=st.button("Recommend Medicine")
+bt = st.button("Recommend Medicine")
 
 if bt:
     if uploaded_file:
-        # Read the image as bytes
+        # Read and decode image
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    
-        # Decode the image bytes using OpenCV
         img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        # Convert the image from BGR to RGB (OpenCV uses BGR by default)
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    
-        # Display the image
-        #st.image(img_rgb, caption='Uploaded Image', use_column_width=True)
-        st.image(img_rgb, caption='Uploaded Image')
 
+        # Display uploaded image
+        st.image(img_rgb, caption='Uploaded Leaf Image', use_column_width=True)
 
-        img_grayscale=cv2.resize(img,(128,128))
-        image=img_grayscale/255
-        test_image = image.reshape((1,128,128,3))
-        prediction=model.predict(test_image)
+        # Resize to 224x224 for the model (use RGB)
+        resized_img = cv2.resize(img_rgb, (224, 224))  # Resize
+        normalized_img = resized_img / 255.0            # Normalize
+        test_image = normalized_img.reshape((1, 224, 224, 3))  # Add batch dimension
 
-        #to get the index value 
+        # Predict using the CNN model
+        prediction = model.predict(test_image)
         index_value = np.argmax(prediction, axis=1)[0]
+        diseases_name = diseases[index_value]
 
-        #to know the diseases name 
-        diseases_name=diseases[index_value]
+        # Show result
+        st.markdown('## Leaf Disease Name and Cure')
+        st.write("🦠 **Detected Disease**:", diseases_name)
 
-        st.markdown('## Leaf Diseases Name And its cure')
-        st.write("Name of this Plant disesses is", diseases_name)
-
-
-        #passing Diseases name tp the gpt model to know its cure
-
-        messages=[SystemMessage("I am giving you the Mango leaf Diseses name and you have to give its cure and name of the medicine required for that .note:= If Leaf Is healthy ,then just pass a simple meassage ,like your leaf is healthy"),
-        HumanMessage(diseases_name)]
-
-        answer=llm.invoke(messages)
-        st.write(answer)
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
+        # Query GPT for cure suggestion
+        messages = [
+            SystemMessage("I am giving you the Mango leaf disease name. You have to give its cure and name of the medicine. Note: If leaf is healthy, just say the leaf is healthy."),
+            HumanMessage(diseases_name)
+        ]
+        answer = llm.invoke(messages)
+        st.write( answer)
