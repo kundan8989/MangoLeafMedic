@@ -22,7 +22,7 @@ load_dotenv()
 llm = OpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"), temperature=0.7)
 
 # Streamlit app
-st.title("🍃 MangoLeafMedic")
+st.title(" MangoLeafMedic")
 
 uploaded_file = st.file_uploader("Upload a mango leaf image", type=["jpg", "png", "jpeg", "gif"])
 
