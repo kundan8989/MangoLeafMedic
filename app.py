@@ -9,7 +9,7 @@ from keras.models import load_model
 import tensorflow as tf
 
 # Load the model
-model = load_model('mld_new.keras')
+model = load_model('mango_model_git2.keras')
 
 # Class labels
 diseases = ["Anthracnose", "Bacterial Canker", "Cutting Weevil", "Die back",
